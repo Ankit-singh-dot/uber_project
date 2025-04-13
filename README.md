@@ -92,6 +92,7 @@ The request body must be sent in JSON format and include the following fields:
 | `200`       | User successfully logged in. Returns a JSON object with a token and user.  |
 | `400`       | Validation error. Returns a JSON object with the validation error details. |
 | `500`       | Internal server error.                                                     |
+| `401`       | Unauthorized. Invalid email or password.                                   |
 
 ---
 
@@ -144,4 +145,97 @@ Content-Type: application/json
     }
   ]
 }
+```
+
+```json
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+
+{
+  "error": "Invalid email or password"
+}
+```
+
+---
+
+## Endpoint: `/users/profile`
+
+### Method: `GET`
+
+This endpoint is used to retrieve the profile of the currently authenticated user.
+
+---
+
+### Headers
+
+| Header            | Type     | Required | Description                     |
+|-------------------|----------|----------|---------------------------------|
+| `Authorization`   | `string` | Yes      | Bearer token for authentication.|
+
+---
+
+### Responses
+
+| Status Code | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| `200`       | Successfully retrieved user profile. Returns a JSON object with user data. |
+| `401`       | Unauthorized. Token is missing or invalid.                                 |
+
+---
+
+### Example Request
+
+```http
+GET /users/profile
+Authorization: Bearer <token>
+```
+
+### Example Response
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "_id": "64f1c2e5b5f1c2e5b5f1c2e5",
+  "fullname": {
+    "firstName": "John",
+    "lastName": "Doe"
+  },
+  "email": "john.doe@example.com"
+}
+```
+
+---
+
+## Endpoint: `/users/logout`
+
+### Method: `POST`
+
+This endpoint is used to log out the currently authenticated user.
+
+---
+
+### Headers
+
+| Header            | Type     | Required | Description                     |
+|-------------------|----------|----------|---------------------------------|
+| `Authorization`   | `string` | Yes      | Bearer token for authentication.|
+
+---
+
+### Responses
+
+| Status Code | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| `200`       | Successfully logged out.                                                   |
+| `401`       | Unauthorized. Token is missing or invalid.                                 |
+
+---
+
+### Example Request
+
+```http
+POST /users/logout
+Authorization: Bearer <token>
 ```
