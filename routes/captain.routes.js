@@ -30,4 +30,27 @@ router.post(
   ],
   CaptainController.registerCaptain
 );
+router.post(
+  "/login",
+  [
+    body("email").isEmail().withMessage("Invalid Email"),
+    body("password").notEmpty().withMessage("Password is required"),
+  ],
+  CaptainController.loginCaptain
+);
+router.get(
+  "/profile",
+  authMiddleware.authCaptain,
+  CaptainController.getCaptainProfile
+);
+router.post(
+  "/logout",
+  authMiddleware.authCaptain,
+  CaptainController.logoutCaptain
+);
+router.get(
+  "/all",
+  authMiddleware.authCaptain,
+  CaptainController.getAllCaptains
+);
 module.exports = router;

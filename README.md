@@ -240,6 +240,15 @@ POST /users/logout
 Authorization: Bearer <token>
 ```
 
+### Example Response
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+"Logout successfully"
+```
+
 ---
 
 ## Endpoint: `/captains/register`
@@ -336,4 +345,150 @@ Content-Type: application/json
     }
   ]
 }
+```
+
+---
+
+## Endpoint: `/captains/login`
+
+### Method: `POST`
+
+This endpoint is used to authenticate a captain and log them into the system.
+
+---
+
+### Request Body
+
+The request body must be sent in JSON format and include the following fields:
+
+| Field      | Type     | Required | Description                              |
+|------------|----------|----------|------------------------------------------|
+| `email`    | `string` | Yes      | The email address of the captain.        |
+| `password` | `string` | Yes      | The password of the captain.             |
+
+---
+
+### Validation Rules
+
+- `email` must be a valid email address.
+- `password` must not be empty.
+
+---
+
+### Responses
+
+| Status Code | Description                                                                          |
+|-------------|--------------------------------------------------------------------------------------|
+| `200`       | Successfully logged in. Returns a JSON object with a token and captain data.         |
+| `400`       | Validation error. Returns a JSON object with the validation error details.           |
+| `401`       | Authentication failure. Invalid email or password.                                 |
+| `500`       | Internal server error.                                                               |
+
+---
+
+### Example Request
+
+```json
+POST /captains/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "StrongPassword123!"
+}
+```
+
+### Example Response
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "_id": "64f1c2e5b5f1c2e5b5f1c2e5",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com"
+}
+```
+
+---
+
+## Endpoint: `/captains/logout`
+
+### Method: `POST`
+
+This endpoint is used to log out the currently authenticated captain.
+
+---
+
+### Headers
+
+| Header            | Type     | Required | Description                     |
+|-------------------|----------|----------|---------------------------------|
+| `Authorization`   | `string` | Yes      | Bearer token for authentication.|
+
+---
+
+### Example Request
+
+```http
+POST /captains/logout
+Authorization: Bearer <token>
+```
+
+### Example Response
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+"Logout successfully"
+```
+
+---
+
+## Endpoint: `/captains/all`
+
+### Method: `GET`
+
+This endpoint is used to retrieve all captains in the system.
+
+---
+
+### Headers
+
+| Header            | Type     | Required | Description                     |
+|-------------------|----------|----------|---------------------------------|
+| `Authorization`   | `string` | Yes      | Bearer token for authentication.|
+
+---
+
+### Example Request
+
+```http
+GET /captains/all
+Authorization: Bearer <token>
+```
+
+### Example Response
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "_id": "64f1c2e5b5f1c2e5b5f1c2e5",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com"
+  },
+  {
+    "_id": "64f1c2e5b5f1c2e5b5f1c2e6",
+    "firstName": "Jane",
+    "lastName": "Smith",
+    "email": "jane.smith@example.com"
+  }
+]
 ```
