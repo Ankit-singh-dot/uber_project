@@ -9,9 +9,18 @@ router.post(
     body("fullname.firstName")
       .isLength({ min: 3 })
       .withMessage("First name must be at least 3 character long"),
-    body("password").isStrongPassword()
-    .withMessage("Password is not strong enough"),
+    body("password")
+      .isStrongPassword()
+      .withMessage("Password is not strong enough"),
   ],
   UserController.registerUser
+);
+router.post(
+  "/login",
+  [
+    body("email").isEmail().withMessage("Invalid Email"),
+    body("password").notEmpty().withMessage("Password is required"),
+  ],
+  UserController.loginUser
 );
 module.exports = router;
