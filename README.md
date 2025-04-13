@@ -239,3 +239,101 @@ This endpoint is used to log out the currently authenticated user.
 POST /users/logout
 Authorization: Bearer <token>
 ```
+
+---
+
+## Endpoint: `/captains/register`
+
+### Method: `POST`
+
+This endpoint is used to register a new captain in the system.
+
+---
+
+### Request Body
+
+The request body must be sent in JSON format and include the following fields:
+
+| Field               | Type     | Required | Description                                      |
+|---------------------|----------|----------|--------------------------------------------------|
+| `firstName`         | `string` | Yes      | The first name of the captain (minimum 3 characters). |
+| `lastName`          | `string` | Yes      | The last name of the captain (minimum 3 characters). |
+| `email`             | `string` | Yes      | The email address of the captain (must be valid and unique). |
+| `password`          | `string` | Yes      | The password of the captain (must be strong).        |
+
+---
+
+### Validation Rules
+
+- `firstName`: Must be at least 3 characters long.
+- `lastName`: Must be at least 3 characters long.
+- `email`: Must be a valid email address and unique.
+- `password`: Must meet strong password criteria.
+
+---
+
+### Responses
+
+| Status Code | Description                                                                 |
+|-------------|-----------------------------------------------------------------------------|
+| `201`       | Captain successfully registered. Returns a JSON object with captain details. |
+| `400`       | Validation error. Returns a JSON object with the validation error details. |
+| `500`       | Internal server error.                                                     |
+
+---
+
+### Example Request
+
+```json
+POST /captains/register
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "password": "StrongPassword123!"
+}
+```
+
+### Example Response
+
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "message": "Captain registered successfully",
+  "captain": {
+    "_id": "64f1c2e5b5f1c2e5b5f1c2e5",
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "john.doe@example.com"
+  }
+}
+```
+
+```json
+HTTP/1.1 400 Bad Request
+Content-Type: application/json
+
+{
+  "error": [
+    {
+      "msg": "First name should be at least 3 characters",
+      "param": "firstName",
+      "location": "body"
+    },
+    {
+      "msg": "Last name should be at least 3 characters",
+      "param": "lastName",
+      "location": "body"
+    },
+    {
+      "msg": "Invalid email",
+      "param": "email",
+      "location": "body"
+    }
+  ]
+}
+```
