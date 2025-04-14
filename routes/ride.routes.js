@@ -20,4 +20,4 @@ router.post(
     .withMessage("Vehicle type is required"),
     rideController.createRide
 );
-module.export = router;
+module.exports = router;
