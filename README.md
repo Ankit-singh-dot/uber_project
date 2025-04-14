@@ -492,3 +492,99 @@ Content-Type: application/json
   }
 ]
 ```
+
+---
+
+## Endpoint: `/rides`
+
+### Method: `POST`
+
+This endpoint is used to create a new ride.
+
+---
+
+### Request Body
+
+The request body must be sent in JSON format and include the following fields:
+
+| Field           | Type     | Required | Description                                     |
+|-----------------|----------|----------|-------------------------------------------------|
+| `passengerName` | `string` | Yes      | The name of the passenger.                      |
+| `pickupAddress` | `string` | Yes      | The pickup address for the ride.                |
+| `dropoffAddress`| `string` | Yes      | The dropoff address for the ride.               |
+
+---
+
+### Responses
+
+| Status Code | Description                                                                     |
+|-------------|---------------------------------------------------------------------------------|
+| `201`       | Ride successfully created. Returns a JSON object of the created ride.           |
+| `500`       | Internal server error.                                                          |
+
+---
+
+### Example Request
+
+```json
+POST /rides
+Content-Type: application/json
+
+{
+  "passengerName": "Alice Smith",
+  "pickupAddress": "1600 Amphitheatre Parkway, Mountain View, CA",
+  "dropoffAddress": "1 Infinite Loop, Cupertino, CA"
+}
+```
+
+### Example Response
+
+```json
+HTTP/1.1 201 Created
+Content-Type: application/json
+
+{
+  "_id": "64f1c2e5b5f1c2e5b5f1c2e5",
+  "passengerName": "Alice Smith",
+  "pickupAddress": "1600 Amphitheatre Parkway, Mountain View, CA",
+  "dropoffAddress": "1 Infinite Loop, Cupertino, CA",
+  "pickupCoordinates": {
+    "lat": 37.4224764,
+    "lng": -122.0842499
+  },
+  "dropoffCoordinates": {
+    "lat": 37.33182,
+    "lng": -122.03118
+  },
+  "status": "requested",
+  "createdAt": "2023-10-01T12:00:00.000Z",
+  "updatedAt": "2023-10-01T12:00:00.000Z"
+}
+```
+
+```json
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "_id": "64f1c2e5b5f1c2e5b5f1c2e5",
+  "passengerName": "Alice Smith",
+  "pickupAddress": "1600 Amphitheatre Parkway, Mountain View, CA",
+  "dropoffAddress": "1 Infinite Loop, Cupertino, CA",
+  "pickupCoordinates": { "lat": 37.4224764, "lng": -122.0842499 },
+  "dropoffCoordinates": { "lat": 37.33182, "lng": -122.03118 },
+  "status": "requested",
+  "createdAt": "2023-10-01T12:00:00.000Z",
+  "updatedAt": "2023-10-01T12:00:00.000Z"
+}
+```
+example for price 
+If a car ride is:
+	•	Distance: 10 km
+	•	Duration: 20 minutes
+	•	Peak time
+
+  Fare = 50 (base) + 10*15 (per km) + 20*2 (per min) = 50 + 150 + 40 = 240
+Surge = 240 * 1.5 = 360
+Service Fee = 10
+Total = 370
